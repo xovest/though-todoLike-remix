@@ -1,0 +1,112 @@
+{
+  "name": "thoughtbucket",
+  "author": "itsMapleLeaf",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "prepare": "remix setup && prisma generate",
+    "dev": "remix dev",
+    "dev-test": "cross-env NODE_ENV=test TEST=1 npm-run-all --parallel --print-label --race dev dev-cypress",
+    "dev-cypress": "cypress open",
+    "build": "remix build",
+    "start": "remix-serve build",
+    "test": "cross-env NODE_ENV=test TEST=1 npm-run-all --parallel --race test-app test-cypress",
+    "test-app": "pnpm build && pnpm start",
+    "test-cypress": "wait-on http-get://localhost:3000 && cypress run --browser chrome",
+    "lint": "eslint --ext js,ts,tsx .",
+    "lint-fix": "npm run lint -- --fix",
+    "typecheck": "tsc -b ./tsconfig.base.json",
+    "format": "prettier --write .",
+    "db-start": "docker-compose up --detach",
+    "db-stop": "docker-compose down",
+    "db-logs": "docker-compose logs --follow"
+  },
+  "dependencies": {
+    "@headlessui/react": "1.4.2",
+    "@heroicons/react": "1.0.5",
+    "@prisma/client": "3.5.0",
+    "@remix-run/react": "^1.0.4",
+    "@remix-run/serve": "^1.0.4",
+    "bcryptjs": "2.4.3",
+    "clsx": "1.1.1",
+    "dotenv": "^10.0.0",
+    "immer": "9.0.6",
+    "nanoid": "3.1.30",
+    "react": "^17.0.2",
+    "react-dnd": "14.0.4",
+    "react-dnd-touch-backend": "14.1.1",
+    "react-dom": "^17.0.2",
+    "react-expanding-textarea": "2.3.3",
+    "react-focus-on": "3.5.4",
+    "react-router-dom": "6.0.2",
+    "remix": "^1.0.4",
+    "remix-tailwind": "^0.2.0",
+    "rxjs": "7.4.0",
+    "zod": "3.11.6"
+  },
+  "devDependencies": {
+    "@itsmapleleaf/configs": "1.0.0",
+    "@remix-run/dev": "^1.0.4",
+    "@tailwindcss/line-clamp": "0.2.2",
+    "@testing-library/cypress": "8.0.2",
+    "@types/bcryptjs": "2.4.2",
+    "@types/react": "^17.0.36",
+    "@types/react-dom": "^17.0.11",
+    "@types/tailwindcss": "2.2.4",
+    "@typescript-eslint/eslint-plugin": "5.4.0",
+    "@typescript-eslint/parser": "5.4.0",
+    "cross-env": "7.0.3",
+    "cypress": "9.1.0",
+    "cypress-esbuild-preprocessor": "1.0.2",
+    "eslint": "8.3.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-react": "7.27.1",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "npm-run-all": "4.1.5",
+    "postcss": "8.4.0",
+    "prettier": "2.4.1",
+    "prisma": "3.5.0",
+    "tailwindcss": "3.0.0-alpha.2",
+    "type-fest": "2.6.0",
+    "typescript": "^4.5.2",
+    "wait-on": "6.0.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "sideEffects": false,
+  "prettier": "@itsmapleleaf/configs/prettier",
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/@itsmapleleaf/configs/eslint"
+    ],
+    "ignorePatterns": [
+      "**/node_modules/**",
+      "**/build/**",
+      "**/.cache/**"
+    ],
+    "rules": {
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "info",
+            "warn",
+            "error"
+          ]
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "cypress/**/*"
+        ],
+        "parserOptions": {
+          "project": "./cypress/tsconfig.json"
+        }
+      }
+    ]
+  }
+}
